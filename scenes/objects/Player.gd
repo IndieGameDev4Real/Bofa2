@@ -14,5 +14,6 @@ func get_direction():
 
 
 func _physics_process(delta):
-	velocity = get_direction() * 100
+	velocity = get_direction() * 150
 	
+	move_and_slide(velocity, Vector2.ZERO, false, 4, 0, true);

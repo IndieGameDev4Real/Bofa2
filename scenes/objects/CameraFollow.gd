@@ -14,6 +14,8 @@ onready var leash_len := leash.length()
 export (NodePath) var target_path: NodePath
 var target: Node2D
 
+var exact_pos = self.position
+
 func _ready():
 	target = get_node(target_path)
 	if will_snap:
@@ -24,26 +26,19 @@ func _ready():
 func _physics_process(delta):
 	
 	if target != null:
-		if circular:
-			var diff = target.position - self.position
-			var diff_len = diff.length()
-			if diff_len > leash_len:
-				var leashed = diff * (( diff_len - leash_len ) / diff_len )
-				self.position += max_vec2( leashed/4, leashed.clamped(2) )
-		else:
-			
-			# calculate the diff of self position and the position of target
-			# mult by parallax for parallax scaling
-			var dpos = parallax * ( target.position - self.position )
-			
-			# for x and y, check if the target is farther away than the "leash" on that axis
-			# if so  
-			var dist = Vector2.ZERO
-			if abs( dpos.x ) > leash.x:
-				dist.x = sign(dpos.x) * clamp(( abs(dpos.x) - leash.x ) * speed_scale, min_speed.x, 10000 )
-			if abs( dpos.y ) > leash.y:
-				dist.y = sign(dpos.y) * clamp(( abs(dpos.y) - leash.y ) * speed_scale, min_speed.y, 10000 )
-			position += dist * delta * 60
+		# calculate the diff of self position and the position of target
+		# mult by parallax for parallax scaling
+		var dpos = parallax * ( target.position - exact_pos )
+		
+		# for x and y, check if the target is farther away than the "leash" on that axis
+		# if so  
+		var dist = Vector2.ZERO
+		if abs( dpos.x ) > leash.x:
+			dist.x = sign(dpos.x) * clamp(( abs(dpos.x) - leash.x ) * speed_scale, min_speed.x, 10000 )
+		if abs( dpos.y ) > leash.y:
+			dist.y = sign(dpos.y) * clamp(( abs(dpos.y) - leash.y ) * speed_scale, min_speed.y, 10000 )
+		exact_pos += dist * delta * 60
+	position = exact_pos
 
 
 func max_abs( a, b ):
