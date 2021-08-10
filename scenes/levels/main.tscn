@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/objects/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/objects/CameraFollow.gd" type="Script" id=2]
+
+[node name="main" type="Node2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2( 184.312, 265.83 )
+color = Color( 0.627451, 0.811765, 0.682353, 1 )
+polygon = PoolVector2Array( 52.2183, 19.8801, -47.795, 96.1615, -191.882, -91.9992, 47.1329, -190.317 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+position = Vector2( 293.046, 293.013 )
+color = Color( 0.247059, 0.133333, 0.45098, 1 )
+polygon = PoolVector2Array( 52.2183, 19.8801, -47.795, 96.1615, -191.882, -91.9992, 47.1329, -190.317 )
+
+[node name="Michael" parent="." instance=ExtResource( 1 )]
+position = Vector2( 528.884, 288.174 )
+scale = Vector2( 0.25, 0.25 )
+velocity = Vector2( 3, 3 )
+
+[node name="Camera" type="Camera2D" parent="."]
+visible = false
+current = true
+script = ExtResource( 2 )
+leash = Vector2( 25, 25 )
+min_speed = Vector2( 1, 1 )
+target_path = NodePath("../Michael")
