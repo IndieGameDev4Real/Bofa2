@@ -1,34 +1,34 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://assets/fonts/teko.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/INGAME_UI.gd" type="Script" id=1]
 
-[sub_resource type="Theme" id=2]
-default_font = ExtResource( 1 )
+[sub_resource type="DynamicFontData" id=1]
+antialiased = false
+font_path = "res://assets/fonts/Teko/Teko-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = SubResource( 1 )
+
+[sub_resource type="Theme" id=3]
+default_font = SubResource( 2 )
 
 [node name="INGAME_UI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = SubResource( 3 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HSlider" type="HSlider" parent="."]
-margin_left = 0.897949
-margin_top = 44.8985
-margin_right = 431.898
-margin_bottom = 70.8985
+[node name="pauseBtn" type="Button" parent="."]
+margin_right = 91.0
+focus_mode = 0
+enabled_focus_mode = 0
+text = "Pause"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="RichTextLabel" parent="."]
-margin_left = 14.0
-margin_top = 13.0
-margin_right = 129.0
-margin_bottom = 48.0
-theme = SubResource( 2 )
-text = "hardness"
-scroll_active = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[connection signal="pressed" from="pauseBtn" to="." method="_on_pauseBtn_pressed"]

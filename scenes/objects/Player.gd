@@ -7,6 +7,8 @@ export var ROLL_SPEED := 300
 export var FRICTION := 500
 
 var roll_timer = -1
+var attk_timer = -1
+onready var tween = $Tween
 
 enum { MOVE,
 	ROLL,
@@ -14,8 +16,11 @@ enum { MOVE,
 	ITEM,
 	NOPIE }
 
+var state_stack = [MOVE]
+
 var state = MOVE
 var roll_vector = Vector2.ZERO
+
 
 func _ready():
 	pass
@@ -27,7 +32,7 @@ func _physics_process(delta):
 		ROLL:
 			roll_state(delta)
 		ATTACK:
-			pass
+			attack_state(delta)
 		ITEM:
 			pass
 		NOPIE:
@@ -55,6 +60,8 @@ func move_state(delta):
 	
 	if Input.is_action_just_pressed("roll"):
 		state = ROLL
+	elif Input.is_action_just_pressed("attack"):
+		state = ATTACK
 
 func roll_state(delta):
 	if roll_timer == -1:
@@ -67,9 +74,22 @@ func roll_state(delta):
 		roll_timer = max(roll_timer - delta, 0)
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	move()
-
+	
 func attack_state(delta):
-	pass
+	if attk_timer == -1:
+		$Sword.visible = true
+		attk_timer = 1
+		tween.interpolate_property($Sword, "rotation", $Sword.rotation - PI/2, $Sword.rotation + PI/2, attk_timer, Tween.TRANS_LINEAR)                   
+		tween.start()
+	elif attk_timer == 0:
+		$Sword.visible = false
+		attk_timer = -1
+		state = MOVE
+		tween.remove_all()
+	else:
+		attk_timer = max(attk_timer - delta, 0)
+	move()
+
 
 func move():
 	velocity = move_and_slide(velocity)
