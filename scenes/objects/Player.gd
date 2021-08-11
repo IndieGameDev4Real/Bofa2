@@ -78,14 +78,15 @@ func roll_state(delta):
 func attack_state(delta):
 	if attk_timer == -1:
 		$Sword.visible = true
-		attk_timer = 1
+		attk_timer = 0.1
 		tween.interpolate_property($Sword, "rotation", $Sword.rotation - PI/2, $Sword.rotation + PI/2, attk_timer, Tween.TRANS_LINEAR)                   
 		tween.start()
+		state = MOVE
 	elif attk_timer == 0:
 		$Sword.visible = false
 		attk_timer = -1
-		state = MOVE
 		tween.remove_all()
+		$Sword.rotation = 0
 	else:
 		attk_timer = max(attk_timer - delta, 0)
 	move()
