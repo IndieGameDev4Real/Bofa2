@@ -3,11 +3,11 @@
 [ext_resource path="res://assets/textures/Texture/TX Tileset Grass.png" type="Texture" id=1]
 [ext_resource path="res://assets/textures/Texture/TX Struct.png" type="Texture" id=2]
 
-[sub_resource type="ConcavePolygonShape2D" id=1]
-segments = PoolVector2Array( 0, 0, 7.70332, 0, 7.70332, 0, 7.47883, 95.9709, 7.47883, 95.9709, 0, 96, 0, 96, 0, 0 )
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 7.95561, 96, 0, 96, 0, 0, 7.53698, 0 )
 
-[sub_resource type="ConcavePolygonShape2D" id=2]
-segments = PoolVector2Array( 63.7603, 0, 64, 96, 64, 96, 56.478, 96, 56.478, 96, 56.0855, 0.182022, 56.0855, 0.182022, 63.7603, 0 )
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 63.7719, 96, 55.6786, 96, 55.6786, 0, 63.7719, 0 )
 
 [resource]
 0/name = "TX Tileset Grass.png 0"
