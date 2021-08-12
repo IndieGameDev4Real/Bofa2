@@ -23,12 +23,17 @@ func _physics_process(delta):
 			move_state(delta)
 		"DASH":
 			dash_state(delta)
+			
 
 
 func move_state(delta):
+	
 	if Input.is_action_just_pressed("dash"):
 		sm.change_to("DASH")
 		velocity = velocity.normalized() * dash_SPEED
+#	elif Input.is_action_just_pressed("attack"):
+#		atk():
+	
 	set_anim(dir)
 	
 	if dir != Vector2.ZERO:
@@ -43,6 +48,12 @@ func dash_state(delta):
 	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	move()
 
+#func atk():
+#	play.animation
+#	hitbox = true
+#	when animation.end:
+#		hitbox = false
+#		state something#
 
 func move():
 	velocity = move_and_slide(velocity)
