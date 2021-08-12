@@ -20,4 +20,4 @@ func light_strike():
 	if strike % 25 == 0:
 		print("strike")
 		energy = rand_range(0.9, 1.3)
-	
+
