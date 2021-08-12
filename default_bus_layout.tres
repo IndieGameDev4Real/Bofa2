@@ -1,13 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=2]
-
-[sub_resource type="AudioEffectDistortion" id=1]
-resource_name = "Distortion"
-mode = 2
-pre_gain = 29.06
-drive = 0.44
-post_gain = -21.94
+[gd_resource type="AudioBusLayout" format=2]
 
 [resource]
 bus/0/volume_db = -2.99822
-bus/0/effect/0/effect = SubResource( 1 )
-bus/0/effect/0/enabled = true
