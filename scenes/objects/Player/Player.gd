@@ -81,6 +81,9 @@ func set_anim(dir):
 	if dir == Vector2.ZERO:
 		if sprite.animation != "idle":
 			sprite.animation = "idle"
-	else:
+	elif dir == Vector2.DOWN:
 		if sprite.animation != "walking_down":
 			sprite.animation = "walking_down"
+	elif dir == Vector2.UP:
+		if sprite.animation != "walking_up":
+			sprite.animation = "walking_up"
