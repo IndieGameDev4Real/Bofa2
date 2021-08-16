@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Sprite-0002.png-4750467456350c5740eff18cbc0c525d.stex"
+path="res://.import/Grass_Long-Sheet.png-1e29e8b1101ea5f7855aab38cdb5bc25.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/Texture/Sprite-0002.png"
-dest_files=[ "res://.import/Sprite-0002.png-4750467456350c5740eff18cbc0c525d.stex" ]
+source_file="res://assets/textures/Texture/Grass_Long-Sheet.png"
+dest_files=[ "res://.import/Grass_Long-Sheet.png-1e29e8b1101ea5f7855aab38cdb5bc25.stex" ]
 
 [params]
 

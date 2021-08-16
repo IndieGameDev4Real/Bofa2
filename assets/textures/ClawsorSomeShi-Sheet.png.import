@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Sprite-0001.png-1b74c1a7112353b5bc242fdd2835a160.stex"
+path="res://.import/ClawsorSomeShi-Sheet.png-3a45c9571ac25fcf95fcf05cf044a96e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/Texture/Sprite-0001.png"
-dest_files=[ "res://.import/Sprite-0001.png-1b74c1a7112353b5bc242fdd2835a160.stex" ]
+source_file="res://assets/textures/ClawsorSomeShi-Sheet.png"
+dest_files=[ "res://.import/ClawsorSomeShi-Sheet.png-3a45c9571ac25fcf95fcf05cf044a96e.stex" ]
 
 [params]
 
