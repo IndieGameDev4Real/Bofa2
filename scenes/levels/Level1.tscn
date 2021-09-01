@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenes/levels/Level1.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/INGAME_UI.tscn" type="PackedScene" id=2]
@@ -8,8 +8,7 @@
 [ext_resource path="res://assets/audio/music/rain.ogg" type="AudioStream" id=6]
 [ext_resource path="res://assets/textures/light.png" type="Texture" id=7]
 [ext_resource path="res://scenes/objects/Lightning.gd" type="Script" id=8]
-[ext_resource path="res://Grass.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Grass_Long.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/objects/Enemy/Enemy.tscn" type="PackedScene" id=9]
 
 [sub_resource type="ShaderMaterial" id=1]
 
@@ -575,61 +574,13 @@ min_speed = Vector2( 1, 1 )
 target_path = NodePath("../YSort/Michael")
 
 [node name="YSort" type="YSort" parent="."]
+position = Vector2( -6.83942, -0.297363 )
 
-[node name="Grass" parent="YSort" instance=ExtResource( 9 )]
-position = Vector2( 280, 392 )
-
-[node name="Grass2" parent="YSort" instance=ExtResource( 9 )]
-position = Vector2( 280, 376 )
-
-[node name="Grass3" parent="YSort" instance=ExtResource( 9 )]
-position = Vector2( 392, 392 )
-
-[node name="Grass4" parent="YSort" instance=ExtResource( 9 )]
-position = Vector2( 376, 392 )
-
-[node name="Grass5" parent="YSort" instance=ExtResource( 9 )]
-position = Vector2( 360, 392 )
-
-[node name="Grass6" parent="YSort" instance=ExtResource( 9 )]
-position = Vector2( 344, 392 )
-
-[node name="Grass7" parent="YSort" instance=ExtResource( 9 )]
-position = Vector2( 328, 392 )
-
-[node name="Grass8" parent="YSort" instance=ExtResource( 9 )]
-position = Vector2( 312, 392 )
-
-[node name="Grass9" parent="YSort" instance=ExtResource( 9 )]
-position = Vector2( 296, 392 )
-
-[node name="Sprite" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 304, 368 )
-z_index = 1
-
-[node name="Sprite2" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 336, 368 )
-z_index = 1
-
-[node name="Sprite3" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 336, 336 )
-z_index = 1
-
-[node name="Sprite4" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 368, 368 )
-z_index = 1
-
-[node name="Sprite5" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 304, 336 )
-z_index = 1
-
-[node name="Sprite6" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 368, 336 )
-z_index = 1
+[node name="Enemy" parent="YSort" instance=ExtResource( 9 )]
+position = Vector2( 301.401, 245.966 )
 
 [node name="Michael" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 300.55, 232.532 )
-z_index = 1
 velocity = Vector2( 3, 3 )
 
 [node name="Sun" type="Light2D" parent="."]

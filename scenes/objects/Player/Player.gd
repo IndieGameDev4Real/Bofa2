@@ -76,14 +76,17 @@ func get_dir():
 		Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	).normalized()
 
+func try_set_anim(name):
+	if sprite.animation != name:
+		sprite.animation = name;
+
 
 func set_anim(dir):
-	if dir == Vector2.ZERO:
-		if sprite.animation != "idle":
-			sprite.animation = "idle"
-	elif dir == Vector2.DOWN:
-		if sprite.animation != "walking_down":
-			sprite.animation = "walking_down"
-	elif dir == Vector2.UP:
-		if sprite.animation != "walking_up":
-			sprite.animation = "walking_up"
+	print(dir.angle())
+	if dir.angle() <= 0.01 + PI * 3/4 and dir.angle() >= PI / 4:
+		try_set_anim("walking_down")
+	elif dir.angle() >= 0.01 - PI * 3/4 and dir.angle() >= -PI / 4:
+		try_set_anim("walking_up")
+		print("up")
+	else:
+		try_set_anim("idle")
