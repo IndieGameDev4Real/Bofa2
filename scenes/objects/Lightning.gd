@@ -29,7 +29,6 @@ func get_pattern():
 	for i in range(randi()%3+2):
 		var length = 0.2 if randf() > 0.5 else 0.8
 		pat.push_back( length * (0.5 + randf()))
-	print(pat)
 	return pat
 
 

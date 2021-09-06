@@ -1,44 +1,51 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scenes/objects/Enemy/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/Slime_dude_idle.png" type="Texture" id=2]
+[ext_resource path="res://scenes/global/StateMachine.gd" type="Script" id=3]
+[ext_resource path="res://scenes/objects/Enemy/IDLE.gd" type="Script" id=4]
+[ext_resource path="res://scenes/objects/Enemy/DASH.gd" type="Script" id=5]
+[ext_resource path="res://scenes/objects/Enemy/TARGET.gd" type="Script" id=6]
 
-[sub_resource type="CapsuleShape2D" id=10]
+[sub_resource type="CircleShape2D" id=1]
+radius = 0.0
+
+[sub_resource type="CapsuleShape2D" id=2]
 custom_solver_bias = 0.014
 radius = 5.77278
 height = 2.64816
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 2 )
 region = Rect2( 32, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 2 )
 region = Rect2( 64, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 2 )
 region = Rect2( 96, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 2 )
 region = Rect2( 128, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 2 )
 region = Rect2( 160, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=8]
+[sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 2 )
 region = Rect2( 192, 0, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=9]
+[sub_resource type="SpriteFrames" id=10]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "loop": true,
 "name": "default",
 "speed": 8.0
@@ -47,18 +54,46 @@ animations = [ {
 [node name="Enemy" type="Area2D"]
 script = ExtResource( 1 )
 
+[node name="Tween" type="Tween" parent="."]
+
+[node name="DetectRange" type="Area2D" parent="."]
+position = Vector2( 0, -4 )
+
+[node name="Collision" type="CollisionShape2D" parent="DetectRange"]
+shape = SubResource( 1 )
+
 [node name="Polygon2D" type="Polygon2D" parent="."]
 visible = false
 color = Color( 0.188235, 0.466667, 0, 1 )
 polygon = PoolVector2Array( -16, -16, -16, 16, 16, 16, 16, -16 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -5.43077 )
 rotation = 1.5708
-shape = SubResource( 10 )
+shape = SubResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0.146782, -6.01788 )
-frames = SubResource( 9 )
-frame = 1
+frames = SubResource( 10 )
+frame = 6
 playing = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 1.83359, -4.61122 )
+enabled = true
+cast_to = Vector2( 50, 0 )
+collide_with_areas = true
+
+[node name="SM" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="IDLE" type="Node" parent="SM"]
+script = ExtResource( 4 )
+
+[node name="DASH" type="Node" parent="SM"]
+script = ExtResource( 5 )
+
+[node name="TARGET" type="Node" parent="SM"]
+script = ExtResource( 6 )
+
+[connection signal="body_entered" from="DetectRange" to="." method="_on_body_detected"]

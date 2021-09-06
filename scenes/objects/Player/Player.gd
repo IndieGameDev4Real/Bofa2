@@ -82,11 +82,9 @@ func try_set_anim(name):
 
 
 func set_anim(dir):
-	print(dir.angle())
 	if dir.angle() <= 0.01 + PI * 3/4 and dir.angle() >= PI / 4:
 		try_set_anim("walking_down")
-	elif dir.angle() >= 0.01 - PI * 3/4 and dir.angle() >= -PI / 4:
+	elif dir.angle() >= -0.01 - PI * 3/4 and dir.angle() <= -PI / 4:
 		try_set_anim("walking_up")
-		print("up")
 	else:
 		try_set_anim("idle")

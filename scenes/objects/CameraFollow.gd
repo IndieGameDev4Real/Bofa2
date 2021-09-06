@@ -4,7 +4,6 @@ extends Camera2D
 
 export (bool) var will_snap := true
 export (Vector2) var leash := Vector2(30, 30)
-export (bool) var circular := false
 export (float) var speed_scale := 0.1
 export (Vector2) var min_speed := Vector2(2,2)
 
@@ -38,6 +37,10 @@ func _physics_process(delta):
 		if abs( dpos.y ) > leash.y:
 			dist.y = sign(dpos.y) * clamp(( abs(dpos.y) - leash.y ) * speed_scale, min_speed.y, 10000 )
 		exact_pos += dist * delta * 60
+		
+		if abs(dist.abs().angle() - PI/4) <= 0.1:
+			exact_pos = exact_pos.round()
+			
 	position = exact_pos
 
 

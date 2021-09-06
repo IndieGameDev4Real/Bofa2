@@ -4,8 +4,8 @@
 [ext_resource path="res://assets/textures/Sword.png" type="Texture" id=2]
 [ext_resource path="res://assets/textures/Cloak_Dude_Walk.png" type="Texture" id=3]
 [ext_resource path="res://scenes/global/StateMachine.gd" type="Script" id=5]
-[ext_resource path="res://scenes/global/WALK.gd" type="Script" id=6]
-[ext_resource path="res://scenes/global/DASH.gd" type="Script" id=7]
+[ext_resource path="res://scenes/objects/Player/WALK.gd" type="Script" id=6]
+[ext_resource path="res://scenes/objects/Player/DASH.gd" type="Script" id=7]
 [ext_resource path="res://assets/textures/Cloak_Dude_Walk_Up-Sheet.png" type="Texture" id=8]
 
 [sub_resource type="CapsuleShape2D" id=1]
@@ -133,7 +133,6 @@ occluder = SubResource( 2 )
 position = Vector2( -0.561234, -15.939 )
 frames = SubResource( 20 )
 animation = "walking_up"
-frame = 5
 playing = true
 
 [node name="Sword" type="Area2D" parent="."]

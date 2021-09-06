@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scenes/levels/Level1.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/INGAME_UI.tscn" type="PackedScene" id=2]
@@ -514,16 +514,6 @@ points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 34/shapes = [  ]
 34/z_index = 0
 
-[sub_resource type="Shader" id=4]
-code = "shader_type canvas_item;
-
-void fragment() {
-	COLOR = COLOR;
-}"
-
-[sub_resource type="ShaderMaterial" id=5]
-shader = SubResource( 4 )
-
 [node name="Level1" type="Node2D"]
 script = ExtResource( 1 )
 __meta__ = {
@@ -534,10 +524,21 @@ __meta__ = {
 pause_mode = 2
 
 [node name="INGAME_UI" parent="HUD" instance=ExtResource( 2 )]
-margin_left = 0.0749283
+margin_left = 0.431313
 margin_top = -1.19863
-margin_right = 0.0749512
+margin_right = 0.431335
 margin_bottom = -1.19864
+
+[node name="Camera" type="Camera2D" parent="."]
+visible = false
+current = true
+script = ExtResource( 5 )
+speed_scale = 0.05
+min_speed = Vector2( 1, 1 )
+target_path = NodePath("../YSort/Player")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
 
 [node name="BRUH" type="TileMap" parent="."]
 material = SubResource( 1 )
@@ -547,51 +548,27 @@ cell_y_sort = true
 format = 1
 tile_data = PoolIntArray( 327684, 26, 0, 327685, 27, 0, 327686, 28, 0, 327687, 0, 0, 327688, 1, 0, 327689, 4, 0, 327690, 13, 0, 327691, 12, 0, 327692, 10, 0, 327693, 3, 0, 393220, 29, 0, 393221, 30, 0, 393222, 31, 0, 393223, 2, 0, 393224, 3, 0, 393225, 7, 0, 393226, 14, 0, 393227, 8, 0, 393228, 11, 0, 393229, 4, 0, 458756, 29, 0, 458757, 30, 0, 458758, 31, 0, 458759, 5, 0, 458760, 6, 0, 458761, 10, 0, 458762, 14, 0, 458763, 9, 0, 458764, 12, 0, 458765, 6, 0, 524292, 29, 0, 524293, 30, 0, 524294, 31, 0, 524295, 9, 0, 524296, 10, 0, 524297, 11, 0, 524298, 14, 0, 524299, 5, 0, 524300, 4, 0, 524301, 7, 0, 589828, 29, 0, 589829, 30, 0, 589830, 31, 0, 589831, 15, 0, 589832, 16, 0, 589833, 16, 0, 589834, 19, 0, 589835, 17, 0, 589836, 17, 0, 589837, 18, 0, 655364, 32, 0, 655365, 33, 0, 655366, 34, 0, 655367, 15, 0, 655368, 17, 0, 655369, 17, 0, 655370, 19, 0, 655371, 17, 0, 655372, 17, 0, 655373, 18, 0, 720900, 8, 0, 720901, 10, 0, 720902, 10, 0, 720903, 9, 0, 720904, 10, 0, 720905, 9, 0, 720906, 21, 0, 720907, 5, 0, 720908, 10, 0, 720909, 9, 0, 786436, 6, 0, 786437, 9, 0, 786438, 6, 0, 786439, 7, 0, 786440, 8, 0, 786441, 7, 0, 786442, 5, 0, 786443, 8, 0, 786444, 7, 0, 786445, 5, 0 )
 
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 6 )
-
-[node name="Polygon2D2" type="Polygon2D" parent="."]
-visible = false
-position = Vector2( 293.046, 293.013 )
-color = Color( 0.247059, 0.133333, 0.45098, 1 )
-polygon = PoolVector2Array( 52.2183, 19.8801, -47.795, 96.1615, -191.882, -91.9992, 47.1329, -190.317 )
-
-[node name="Polygon2D" type="Polygon2D" parent="."]
-visible = false
-material = SubResource( 5 )
-position = Vector2( 118.911, 286.466 )
-color = Color( 0.627451, 0.811765, 0.682353, 1 )
-polygon = PoolVector2Array( 52.2183, 19.8801, -47.795, 96.1615, -191.882, -91.9992, 47.1329, -190.317 )
-uv = PoolVector2Array( 1, 1, -1, 1, -1, -1, 1, -1 )
-
-[node name="Camera" type="Camera2D" parent="."]
-visible = false
-current = true
-script = ExtResource( 5 )
-leash = Vector2( 1, 1 )
-speed_scale = 1.0
-min_speed = Vector2( 1, 1 )
-target_path = NodePath("../YSort/Michael")
-
 [node name="YSort" type="YSort" parent="."]
 position = Vector2( -6.83942, -0.297363 )
 
+[node name="Player" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( 278.673, 243.782 )
+velocity = Vector2( 3, 3 )
+
 [node name="Enemy" parent="YSort" instance=ExtResource( 9 )]
 position = Vector2( 301.401, 245.966 )
-
-[node name="Michael" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 300.55, 232.532 )
-velocity = Vector2( 3, 3 )
+target_path = NodePath("../Player")
 
 [node name="Sun" type="Light2D" parent="."]
 position = Vector2( -32, -80 )
 scale = Vector2( 19.327, 13.6432 )
 texture = ExtResource( 7 )
+texture_scale = 0.5
 energy = 0.5
 shadow_enabled = true
-shadow_gradient_length = 65.2
-shadow_filter = 1
-shadow_filter_smooth = 16.1
+shadow_gradient_length = 10.0
+shadow_filter = 2
+shadow_filter_smooth = 9.2
 __meta__ = {
 "_edit_group_": true,
 "_edit_lock_": true

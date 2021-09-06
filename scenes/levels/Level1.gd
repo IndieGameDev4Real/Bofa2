@@ -8,7 +8,6 @@ onready var sun := $Sun
 
 func _ready():
 	pass
-	#print(player_data.data["hp"])
 
 func _process(delta):
 	pass

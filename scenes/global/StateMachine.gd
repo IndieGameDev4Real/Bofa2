@@ -28,8 +28,7 @@ func back():
 		_enter_state()
 
 func _enter_state():
-	if DEBUG:
-		print("Entering state: ", state.name)
+	if DEBUG: print( owner.name + "> Entering state: ", state.name)
 	state.fsm = self
 	state.enter()
 

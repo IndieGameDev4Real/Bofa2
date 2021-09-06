@@ -78,8 +78,8 @@ Global="*res://scenes/global/Global.tscn"
 
 [display]
 
-window/size/width=480
-window/size/height=270
+window/size/width=512
+window/size/height=300
 window/size/test_width=1024
 window/size/test_height=600
 window/stretch/mode="viewport"
