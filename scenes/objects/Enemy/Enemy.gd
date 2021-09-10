@@ -1,6 +1,6 @@
 tool
 class_name Enemy
-extends Area2D
+extends KinematicBody2D
 
 const DEBUG = true
 const phi = 1.618
@@ -17,7 +17,11 @@ export(Array, String) var target_types := ["Player"]
 export var dash_base_len: float = 30;
 export var dash_rand: float = 5;
 export var atk_reach: float = 20;
+var travel_speed: float = 1.0 / 0.3
 
+var dir := Vector2.ZERO
+var speed := 0.0
+var accel := 0.0
 
 # tool
 export(float) var detect_dist setget set_detect_dist, get_detect_dist;
@@ -38,26 +42,25 @@ func _ready():
 	else: 
 		target_node = self
 
+func _physics_process(delta):
+	move_and_slide( dir * speed, Vector2.ZERO, false, 4, 0.7, false )
+	speed = max(0.0, speed + accel * delta)
+
 func move_path() -> void:
-	tween.interpolate_property( 
-		self, 
-		"position", 
-		self.position, 
-		find_path(),
-		0.3,
-		Tween.TRANS_QUAD,
-		Tween.EASE_OUT )
-	tween.start()
-	yield(tween, "tween_completed")
-	tween.remove( self, "position" )
+	var X_max = (find_path())
+	var velo = find_path() * travel_speed
 
-
+	var _len = X_max.length()
+	dir = velo.normalized()
+	accel = - 2 * _len * travel_speed * travel_speed
+	speed = velo.length()
 
 func find_path() -> Vector2:
 	
 	# the starting angle should be straight at the target node
 	var rand_angle = self.position.angle_to_point( target_node.position )
 	var max_tries = 20
+	var move_to = Vector2.ZERO
 
 	# this loops changes the direction of the raycast slightly, ...
 	# and test the new direction for collosions, if the path is ...
@@ -67,26 +70,29 @@ func find_path() -> Vector2:
 	for i in range(max_tries):
 		# pick new angle and force the raycast to update 
 		rand_angle += (randf() * PI/4)
-		raycast.cast_to = Vector2.LEFT.rotated(rand_angle) * dash_base_len * curv_util(1 - i / max_tries) * rand_range(0.5, 1.5)
-		raycast.force_raycast_update()
+		move_to = Vector2.LEFT.rotated(rand_angle) * dash_base_len
+		
+		var prev_pos = position
+		var col := move_and_collide( move_to )
+		var col_pos = position
+		position = prev_pos
 
-		# check and handle collision
-		var collider = raycast.get_collider()
-		if collider != null:
+		if col != null:
+			var collider = col.collider
 			if DEBUG: print("\t", collider.name, " :: ", collider.get_class())
 			
 			# if the collider is the target_node, go straight to the node
 			# otherwise, pick a new direction and check again
 			if collider == target_node:
-				var target_pos = raycast.get_collision_point()
-				return position + target_pos.direction_to(position) * (target_pos.distance_to(position) - 10)
+				var target_pos = col_pos
+				return target_pos.direction_to(position) * 10
 			else:
 				continue;
 		# if the loops runs fully, the current path is valid
 		break
 		
 	# when this code is reached, the current path is valid and should be returned
-	return position + raycast.cast_to
+	return move_to
 
 
 func get_all_collisions():
@@ -140,8 +146,7 @@ func dist_from_target() -> float:
 func _on_DetectArea_body_entered(body: Node2D):
 	if target_types.has( body.get("type") ):
 		detect_queue.append(body)
-	
-	sm.try_call_func("_on_DetectArea_body_entered", [body])
+		sm.try_call_func("_on_DetectArea_body_entered", [body])
 
 func _on_DetectArea_body_exited(body):
 
@@ -149,7 +154,9 @@ func _on_DetectArea_body_exited(body):
 	var i = detect_queue.find(body)
 	if i >= 0: 
 		detect_queue.remove(i)
-	sm.try_call_func("_on_DetectArea_body_exited", [body])
+	if body == target_node:
+		target_node = self
+	# sm.try_call_func("_on_DetectArea_body_exited", [body])
 
 
 

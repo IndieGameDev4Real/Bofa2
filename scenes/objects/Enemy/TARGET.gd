@@ -1,30 +1,36 @@
 extends Node
 
 var fsm: StateMachine
-onready var enemy: Enemy = owner
+onready var enemy: Enemy
+onready var timer: Timer
+
+
+func _ready():
+	enemy = owner
+	timer = $Timer
+
+
 
 func enter():
-	
-	while true:
-		if owner.target_node == owner:
-			if len(owner.detect_queue) <= 0:
-				fsm.change_to("IDLE")
-				break
-			else:
-				owner.target_node = owner.pick_next_target()
-		else:
-			
-			if owner.dist_from_target() < owner.atk_reach:
-				fsm.change_to("ATTACK")
-				break
+	timer.start(0.8)
 
-			owner.move_path()
-			
-		yield(get_tree().create_timer(0.5), "timeout")
 
 func exit():
+	timer.stop()
 	fsm.back()
 
 func _on_DetectArea_body_exited(body):
-	if owner.target_node == body:
-		owner.target_node == owner
+	if enemy.target_node == body:
+		enemy.target_node == enemy
+
+
+func _on_Timer_timeout():
+	if enemy.target_node == enemy:
+		if len(enemy.detect_queue) == 0:
+			exit()
+			return;
+		else:
+			enemy.target_node = enemy.pick_next_target()
+	else:
+		enemy.move_path()
+		

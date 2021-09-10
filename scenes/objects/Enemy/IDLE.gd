@@ -1,7 +1,10 @@
 extends Node
 
 var fsm: StateMachine
-onready var enemy: Enemy = owner
+onready var enemy: Enemy
+
+func _ready():
+	enemy = owner
 
 func enter():
 	pass
