@@ -5,5 +5,5 @@ antialiased = false
 font_path = "res://assets/fonts/Teko/Teko-Regular.ttf"
 
 [resource]
-size = 31
+size = 15
 font_data = SubResource( 1 )

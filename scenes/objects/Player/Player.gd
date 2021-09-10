@@ -1,6 +1,10 @@
 class_name Player
 extends Actor
 
+
+const format = "std"
+const type = "Player"
+
 onready var tween = $Tween
 onready var sm = $SM
 onready var sprite = $Sprite

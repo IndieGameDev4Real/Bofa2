@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/levels/Level.gd"
 }, {
+"base": "Control",
+"class": "Log",
+"language": "GDScript",
+"path": "res://scenes/objects/Log/Log.gd"
+}, {
 "base": "Actor",
 "class": "Player",
 "language": "GDScript",
@@ -60,6 +65,7 @@ _global_script_class_icons={
 "Enemy": "",
 "INGAME_UI": "",
 "Level": "",
+"Log": "",
 "Player": "",
 "PlayerData": "",
 "State": "",

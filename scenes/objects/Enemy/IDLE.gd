@@ -4,6 +4,13 @@ var fsm: StateMachine
 onready var enemy: Enemy = owner
 
 func enter():
-	yield(get_tree().create_timer(0.5), "timeout")
-	fsm.change_to("DASH")
+	pass
 
+
+func _on_DetectArea_body_entered(body):
+	owner.anim_player.play("suprise_anim")
+	yield(owner.anim_player, "animation_finished")
+
+	owner.target_node = body
+	
+	fsm.change_to("TARGET")

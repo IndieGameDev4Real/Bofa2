@@ -5,11 +5,16 @@ signal state_changed(state, prev)
 
 const DEBUG = true
 
-var state
+var state: Node
 
 var history = []
 
+var _log: Log = null
+
 func _ready():
+	if owner.has_node("Log"):
+		_log = owner.get_node("Log")
+	
 	state = get_child(0)
 	emit_signal("state_changed", state, null)
 	_enter_state()
@@ -28,7 +33,8 @@ func back():
 		_enter_state()
 
 func _enter_state():
-	if DEBUG: print( owner.name + "> Entering state: ", state.name)
+		
+	if DEBUG and _log != null: _log.add_log([ owner.name + "> Entering state: ", state.name])
 	state.fsm = self
 	state.enter()
 
@@ -53,4 +59,7 @@ func _unhandled_input(event):
 func _unhandled_key_input(event):
 	if state.has_method("unhandled_key_input"):
 		state.unhandled_key_input(event)
+
+func try_call_func(name: String, argv: Array = []):
+	return state.callv(name, argv)
 

@@ -11,8 +11,6 @@ func _ready():
 
 func _process(delta):
 	pass
-	
-
 
 func _on_INGAME_UI_paused():
 	toggle_pause()

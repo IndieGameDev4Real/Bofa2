@@ -1,0 +1,46 @@
+[gd_scene format=2]
+
+[node name="Spatial" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.518626, -0.153853, -0.32512 )
+
+[node name="CSGSphere" type="CSGSphere" parent="."]
+transform = Transform( 2.22823, 0, 0, 0, 2.22823, 0, 0, 0, 2.22823, 1.49764, 2.62339, 1.32708 )
+radius = 1.07423
+
+[node name="CSGSphere3" type="CSGSphere" parent="."]
+transform = Transform( 2.22823, 0, 0, 0, 2.22823, 0, 0, 0, 2.22823, -0.0224882, 5.93345, -0.517133 )
+radius = 0.638884
+
+[node name="CSGSphere2" type="CSGSphere" parent="."]
+transform = Transform( 2.22823, 0, 0, 0, 2.22823, 0, 0, 0, 2.22823, -2.11031, 2.72203, 1.1976 )
+radius = 1.06257
+radial_segments = 25
+rings = 25
+
+[node name="CSGPolygon" type="CSGPolygon" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.33997, -0.0446613, 0.246506 )
+polygon = PoolVector2Array( 6.88096, -0.406169, -3.48211, 0.0583549, -0.373444, 1.73062, 2.64671, 1.90897 )
+
+[node name="CSGPolygon2" type="CSGPolygon" parent="."]
+transform = Transform( 1, 0, 0, 0, -1, 0, 0, 0, 1, -1.71589, -0.184702, -0.406236 )
+polygon = PoolVector2Array( 7.4595, 0.353038, -3.26108, -0.00572678, -1.38532, 1.19321, 4.69176, 1.76194 )
+
+[node name="CSGCylinder" type="CSGCylinder" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.01795, -2.98057, -0.463991 )
+radius = 0.384334
+height = 4.24004
+
+[node name="CSGCylinder4" type="CSGCylinder" parent="."]
+transform = Transform( -0.312786, 0.949796, -0.00724215, -0.949775, -0.312684, 0.0124996, 0.00960754, 0.0107881, 0.999896, -2.39434, 4.839, 0.38537 )
+radius = 0.384334
+height = 4.24004
+
+[node name="CSGCylinder3" type="CSGCylinder" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0509868, 3.96408, 0.615627 )
+radius = 0.384334
+height = 2.06638
+
+[node name="CSGCylinder2" type="CSGCylinder" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.207982, -2.98057, -0.456134 )
+radius = 0.406912
+height = 4.24004

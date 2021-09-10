@@ -133,6 +133,7 @@ occluder = SubResource( 2 )
 position = Vector2( -0.561234, -15.939 )
 frames = SubResource( 20 )
 animation = "walking_up"
+frame = 7
 playing = true
 
 [node name="Sword" type="Area2D" parent="."]

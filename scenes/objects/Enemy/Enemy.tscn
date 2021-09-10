@@ -1,88 +1,119 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scenes/objects/Enemy/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/Slime_dude_idle.png" type="Texture" id=2]
 [ext_resource path="res://scenes/global/StateMachine.gd" type="Script" id=3]
 [ext_resource path="res://scenes/objects/Enemy/IDLE.gd" type="Script" id=4]
-[ext_resource path="res://scenes/objects/Enemy/DASH.gd" type="Script" id=5]
+[ext_resource path="res://scenes/objects/Enemy/ATTACK.gd" type="Script" id=5]
 [ext_resource path="res://scenes/objects/Enemy/TARGET.gd" type="Script" id=6]
+[ext_resource path="res://scenes/objects/Log/Log.tscn" type="PackedScene" id=7]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 0.0
+[sub_resource type="Animation" id=1]
+resource_name = "suprise_anim"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("SurprisePopup:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.01, 0.06, 0.13, 0.21, 0.28, 0.36, 0.89 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false ]
+}
 
-[sub_resource type="CapsuleShape2D" id=2]
-custom_solver_bias = 0.014
-radius = 5.77278
-height = 2.64816
-
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 2 )
 region = Rect2( 32, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 2 )
 region = Rect2( 64, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 2 )
 region = Rect2( 96, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 2 )
 region = Rect2( 128, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=8]
+[sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 2 )
 region = Rect2( 160, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=9]
+[sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 2 )
 region = Rect2( 192, 0, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=10]
+[sub_resource type="SpriteFrames" id=9]
 animations = [ {
-"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
 "loop": true,
 "name": "default",
 "speed": 8.0
 } ]
 
+[sub_resource type="CapsuleShape2D" id=10]
+custom_solver_bias = 0.014
+radius = 5.77278
+height = 2.64816
+
+[sub_resource type="CircleShape2D" id=11]
+radius = 100.0
+
 [node name="Enemy" type="Area2D"]
+position = Vector2( 2.89855, 0.57971 )
 script = ExtResource( 1 )
+target_types = [ "Player", "Michael Mathis" ]
+detect_dist = 100.0
+
+[node name="Log" parent="." instance=ExtResource( 7 )]
+
+[node name="SurprisePopup" type="RichTextLabel" parent="."]
+visible = false
+margin_left = -5.54005
+margin_top = -24.0928
+margin_right = 9.45995
+margin_bottom = -9.09277
+text = "!!!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Tween" type="Tween" parent="."]
 
-[node name="DetectRange" type="Area2D" parent="."]
-position = Vector2( 0, -4 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/suprise_anim = SubResource( 1 )
 
-[node name="Collision" type="CollisionShape2D" parent="DetectRange"]
-shape = SubResource( 1 )
-
-[node name="Polygon2D" type="Polygon2D" parent="."]
-visible = false
-color = Color( 0.188235, 0.466667, 0, 1 )
-polygon = PoolVector2Array( -16, -16, -16, 16, 16, 16, 16, -16 )
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0.146782, -6.01788 )
+frames = SubResource( 9 )
+frame = 6
+playing = true
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -5.43077 )
 rotation = 1.5708
-shape = SubResource( 2 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0.146782, -6.01788 )
-frames = SubResource( 10 )
-frame = 6
-playing = true
+shape = SubResource( 10 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2( 1.83359, -4.61122 )
+position = Vector2( 0.233592, -4.81122 )
 enabled = true
 cast_to = Vector2( 50, 0 )
 collide_with_areas = true
+
+[node name="DetectArea" type="Area2D" parent="."]
+position = Vector2( 0, -4 )
+
+[node name="Collision" type="CollisionShape2D" parent="DetectArea"]
+shape = SubResource( 11 )
 
 [node name="SM" type="Node" parent="."]
 script = ExtResource( 3 )
@@ -90,10 +121,11 @@ script = ExtResource( 3 )
 [node name="IDLE" type="Node" parent="SM"]
 script = ExtResource( 4 )
 
-[node name="DASH" type="Node" parent="SM"]
-script = ExtResource( 5 )
-
 [node name="TARGET" type="Node" parent="SM"]
 script = ExtResource( 6 )
 
-[connection signal="body_entered" from="DetectRange" to="." method="_on_body_detected"]
+[node name="ATTACK" type="Node" parent="SM"]
+script = ExtResource( 5 )
+
+[connection signal="body_entered" from="DetectArea" to="." method="_on_DetectArea_body_entered"]
+[connection signal="body_exited" from="DetectArea" to="." method="_on_DetectArea_body_exited"]
