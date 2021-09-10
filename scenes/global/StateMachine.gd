@@ -9,7 +9,7 @@ var state: Node
 
 var history = []
 
-var _log: Log = null
+var _log = null
 
 func _ready():
 	if owner.has_node("Log"):
@@ -34,7 +34,7 @@ func back():
 
 func _enter_state():
 		
-	if DEBUG and _log != null: _log.add_log([ owner.name + "> Entering state: ", state.name])
+	if DEBUG and _log != null: _log.add_log([ "Entering state: ", state.name])
 	state.fsm = self
 	state.enter()
 

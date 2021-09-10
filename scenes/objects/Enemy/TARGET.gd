@@ -12,7 +12,9 @@ func _ready():
 
 
 func enter():
-	timer.start(0.8)
+	_on_Timer_timeout()
+	timer.start( enemy.travel_time + enemy.rest_time )
+	
 
 
 func exit():

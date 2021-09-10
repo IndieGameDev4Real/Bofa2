@@ -71,6 +71,13 @@ radius = 100.0
 [node name="Enemy" type="KinematicBody2D"]
 position = Vector2( 2.89855, 0.57971 )
 script = ExtResource( 1 )
+detect_dist = null
+
+[node name="debug" type="Node2D" parent="."]
+
+[node name="move_to" type="Polygon2D" parent="debug"]
+z_index = 10
+polygon = PoolVector2Array( -6.18668, -3.75395, -5.92182, 2.60283, 0.434961, 2.60283, -0.0947704, -3.22422 )
 
 [node name="Log" parent="." instance=ExtResource( 7 )]
 
@@ -93,7 +100,7 @@ anims/suprise_anim = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0.146782, -6.01788 )
 frames = SubResource( 9 )
-frame = 6
+frame = 3
 playing = true
 
 [node name="Collision" type="CollisionShape2D" parent="."]

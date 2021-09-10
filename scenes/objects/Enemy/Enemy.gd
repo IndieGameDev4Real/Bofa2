@@ -17,7 +17,8 @@ export(Array, String) var target_types := ["Player"]
 export var dash_base_len: float = 30;
 export var dash_rand: float = 5;
 export var atk_reach: float = 20;
-var travel_speed: float = 1.0 / 0.3
+export var travel_time: float = 0.3;
+export var rest_time: float = 0.3;
 
 var dir := Vector2.ZERO
 var speed := 0.0
@@ -26,12 +27,12 @@ var accel := 0.0
 # tool
 export(float) var detect_dist setget set_detect_dist, get_detect_dist;
 
-onready var target_node: Node2D = get_node(target_path) 
+onready var target_node: Node2D
 onready var tween: Tween = $Tween
-onready var raycast: RayCast2D = $RayCast2D
-onready var sm: StateMachine = $SM 
+onready var sm = $SM 
 onready var anim_player: AnimationPlayer = $AnimationPlayer
 onready var _log := $Log
+onready var debug_node := $debug
 
 
 
@@ -48,11 +49,13 @@ func _physics_process(delta):
 
 func move_path() -> void:
 	var X_max = (find_path())
-	var velo = find_path() * travel_speed
+	$debug/move_to.position = X_max
+	
+	
+	var velo = 2 * X_max / travel_time
 
-	var _len = X_max.length()
+	accel = - 2 * X_max.length() / ( travel_time * travel_time )
 	dir = velo.normalized()
-	accel = - 2 * _len * travel_speed * travel_speed
 	speed = velo.length()
 
 func find_path() -> Vector2:
@@ -69,8 +72,8 @@ func find_path() -> Vector2:
 	# NOTE: the distance gets shorter each attempt, as to prevent from soft lock
 	for i in range(max_tries):
 		# pick new angle and force the raycast to update 
-		rand_angle += (randf() * PI/4)
 		move_to = Vector2.LEFT.rotated(rand_angle) * dash_base_len
+		rand_angle += (randf() * PI/4)
 		
 		var prev_pos = position
 		var col := move_and_collide( move_to )
@@ -83,9 +86,9 @@ func find_path() -> Vector2:
 			
 			# if the collider is the target_node, go straight to the node
 			# otherwise, pick a new direction and check again
-			if collider == target_node:
+			if col.collider_id == target_node.get_instance_id():
 				var target_pos = col_pos
-				return target_pos.direction_to(position) * 10
+				return col_pos - position
 			else:
 				continue;
 		# if the loops runs fully, the current path is valid
@@ -93,22 +96,6 @@ func find_path() -> Vector2:
 		
 	# when this code is reached, the current path is valid and should be returned
 	return move_to
-
-
-func get_all_collisions():
-	var ray = raycast
-	var objects_collide = [] #The colliding objects go here.
-	while ray.is_colliding():
-		var obj = ray.get_collider() #get the next object that is colliding.
-		objects_collide.append( obj ) #add it to the array.
-		ray.add_exception( obj ) #add to ray's exception. That way it could detect something being behind it.
-		ray.force_raycast_update() #update the ray's collision query.
-
-	#after all is done, remove the objects from ray's exception.
-	for obj in objects_collide:
-		ray.remove_exception( obj )
-	
-	return objects_collide
 
 
 
@@ -131,7 +118,7 @@ func pick_next_target() -> PhysicsBody2D:
 	var closest = self
 	var dist = Vector2(1000, 0)
 	for body in detect_queue:
-		dist.y = body.distance_squared_to(self)
+		dist.y = body.position.distance_squared_to(position)
 		if dist.y < dist.x:
 			closest = body
 			dist.x = dist.y
