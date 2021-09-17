@@ -71,7 +71,7 @@ radius = 100.0
 [node name="Enemy" type="KinematicBody2D"]
 position = Vector2( 2.89855, 0.57971 )
 script = ExtResource( 1 )
-detect_dist = null
+detect_dist = 100.0
 
 [node name="debug" type="Node2D" parent="."]
 
@@ -100,7 +100,7 @@ anims/suprise_anim = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0.146782, -6.01788 )
 frames = SubResource( 9 )
-frame = 3
+frame = 2
 playing = true
 
 [node name="Collision" type="CollisionShape2D" parent="."]
@@ -112,6 +112,7 @@ __meta__ = {
 }
 
 [node name="DetectArea" type="Area2D" parent="."]
+visible = false
 position = Vector2( 0, -4 )
 __meta__ = {
 "_edit_group_": true,
