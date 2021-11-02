@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/objects/Bloomer/Bloomer.gd" type="Script" id=1]
 [ext_resource path="res://scenes/global/StateMachine.gd" type="Script" id=2]
@@ -6,12 +6,26 @@
 [ext_resource path="res://scenes/objects/Bloomer/SHOOT.gd" type="Script" id=4]
 [ext_resource path="res://scenes/objects/Hitbox.gd" type="Script" id=5]
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 a : hint_color;
+
+void fragment() {
+	COLOR.rgba *= a;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/a = Color( 0.137255, 0.137255, 0.137255, 1 )
+
+[sub_resource type="CapsuleShape2D" id=3]
 radius = 8.0
 height = 1.99999
 
 [sub_resource type="Animation" id=4]
 resource_name = "hurt"
+length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
@@ -25,8 +39,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "shoot"
+[sub_resource type="Animation" id=5]
 length = 0.65
 step = 0.01
 tracks/0/type = "value"
@@ -80,10 +93,11 @@ tracks/2/keys = {
 } ]
 }
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=6]
 radius = 126.004
 
 [node name="Bloomer" type="KinematicBody2D"]
+material = SubResource( 2 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 1 )
@@ -93,11 +107,11 @@ max_hp = 10
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -3 )
 rotation = 1.57079
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/hurt = SubResource( 4 )
-anims/shoot = SubResource( 2 )
+anims/shoot = SubResource( 5 )
 
 [node name="ShootPosition" type="Position2D" parent="."]
 position = Vector2( 0, -39 )
@@ -106,16 +120,19 @@ position = Vector2( 0, -39 )
 position = Vector2( 0, -16 )
 
 [node name="Stem" type="Polygon2D" parent="."]
+use_parent_material = true
 color = Color( 0, 0.160784, 0.0431373, 1 )
 polygon = PoolVector2Array( -1, -39, -7, -4, -5, 3, 0, 4, 5, 3, 6, -4 )
 
 [node name="Head" type="Polygon2D" parent="."]
+use_parent_material = true
 position = Vector2( -1, -39 )
 color = Color( 0.513726, 0, 0, 1 )
 offset = Vector2( 5, 18.5 )
 polygon = PoolVector2Array( -29, -24, -28, -19, -24, -15, -16, -13, -24, -8, -26, -3, -21, 1, -16, 0, -12, -2, -7, -8, -3, -11, -1, -6, 4, -1, 9, -1, 13, -2, 14, -3, 16, -7, 13, -12, 11, -14, 6, -17, 18, -18, 19, -20, 19, -25, 14, -29, 8, -29, 1, -26, -1, -24, -4, -29, -6, -31, -12, -38, -17, -38, -21, -35, -21, -31, -13, -26, -11, -20, -16, -20, -21, -27, -26, -27 )
 
 [node name="center thing" type="Polygon2D" parent="Head"]
+use_parent_material = true
 position = Vector2( -1, 1.5 )
 color = Color( 0, 0.501961, 0.513726, 1 )
 offset = Vector2( 42, 27 )
@@ -141,7 +158,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
-shape = SubResource( 3 )
+shape = SubResource( 6 )
 
 [node name="Hitbox" type="KinematicBody2D" parent="."]
 script = ExtResource( 5 )

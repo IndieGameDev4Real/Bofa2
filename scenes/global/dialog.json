@@ -8,9 +8,14 @@
 				{
 					"profile": "GuzDefault",
 					"text": "Well hi there newcumer! I'm Mr. Guz Chuginz, owner of this here beer bucket.",
+					"vars": [],
 					"next": 1
 				},
 				{
+					"cond": {
+						"type": "switch",
+						"var": ["player_data", "hp"],
+					}
 					"text": "Make yourself as home! Please, buy as much booze as you can!",
 					"next": 2
 				},
@@ -24,6 +29,9 @@
 						{
 							"text": "21",
 							"next": 4
+						},
+						{
+							"text": ""
 						}
 					]
 				},
@@ -35,6 +43,8 @@
 					"text": "oh yeeeeeeeeah! thats right baby!",
 					"next": null
 				}
+			],
+			"Level1_alt": [
 			]
 		}
 	}
