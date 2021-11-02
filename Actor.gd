@@ -1,8 +1,13 @@
 class_name Actor
 extends KinematicBody2D
 
-export var velocity := Vector2.ZERO
+var velocity
+onready var center: Position2D = $Center
+export var saved = true
 
 
-func _physics_process(delta):
-	pass
+func _ready():
+	add_to_group("")
+
+func get_center() -> Vector2:
+	return center.position + position

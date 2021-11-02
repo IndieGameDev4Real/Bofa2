@@ -1,0 +1,41 @@
+{
+	"profiles": {
+		"GuzDefault": "res://assets/textures/Guz/GuzDefault.tres"
+	},
+	"dialog": {
+		"Guz": {
+			"Level1_Intro": [
+				{
+					"profile": "GuzDefault",
+					"text": "Well hi there newcumer! I'm Mr. Guz Chuginz, owner of this here beer bucket.",
+					"next": 1
+				},
+				{
+					"text": "Make yourself as home! Please, buy as much booze as you can!",
+					"next": 2
+				},
+				{
+					"text": "Whats 9 + 10?",
+					"option": [
+						{
+							"text": "19",
+							"next": 3
+						},
+						{
+							"text": "21",
+							"next": 4
+						}
+					]
+				},
+				{
+					"text": "19?????? I HATE YOU!!!!",
+					"next": null
+				},
+				{
+					"text": "oh yeeeeeeeeah! thats right baby!",
+					"next": null
+				}
+			]
+		}
+	}
+}

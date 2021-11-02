@@ -1,0 +1,113 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://scenes/levels/Level1.gd" type="Script" id=1]
+[ext_resource path="res://scenes/objects/LevelSwitch/LevelSwitch.gd" type="Script" id=2]
+[ext_resource path="res://assets/tiles/grass.tres" type="TileSet" id=4]
+[ext_resource path="res://scenes/objects/CameraFollow.gd" type="Script" id=5]
+[ext_resource path="res://assets/audio/music/rain.ogg" type="AudioStream" id=6]
+[ext_resource path="res://assets/textures/light.png" type="Texture" id=7]
+[ext_resource path="res://scenes/objects/Lightning.gd" type="Script" id=8]
+[ext_resource path="res://scenes/objects/Slime/Slime.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/textures/tree.png" type="Texture" id=10]
+[ext_resource path="res://scenes/objects/House/House.tscn" type="PackedScene" id=11]
+
+[sub_resource type="ShaderMaterial" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8.55429, 3.08788 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 11.1195, 3.94186 )
+
+[node name="Level" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
+
+[node name="Camera" type="Camera2D" parent="." groups=[
+"main_camera",
+]]
+visible = false
+current = true
+script = ExtResource( 5 )
+speed_scale = 0.05
+min_speed = Vector2( 1, 1 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+pitch_scale = 1.38
+
+[node name="BRUH" type="TileMap" parent="."]
+material = SubResource( 1 )
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 32, 32 )
+cell_y_sort = true
+format = 1
+tile_data = PoolIntArray( 262145, 3, 0, 262146, 3, 0, 262147, 3, 0, 262148, 3, 0, 262149, 3, 0, 262150, 3, 0, 262151, 3, 0, 262152, 3, 0, 262153, 3, 0, 262154, 3, 0, 262155, 3, 0, 262156, 3, 0, 262157, 3, 0, 327681, 3, 0, 327682, 2, 0, 327683, 3, 0, 327684, 26, 0, 327685, 27, 0, 327686, 28, 0, 327687, 0, 0, 327688, 1, 0, 327689, 4, 0, 327690, 13, 0, 327691, 12, 0, 327692, 10, 0, 327693, 3, 0, 393216, 3, 0, 393217, 3, 0, 393218, 5, 0, 393219, 2, 0, 393220, 29, 0, 393221, 30, 0, 393222, 31, 0, 393223, 2, 0, 393224, 3, 0, 393225, 7, 0, 393226, 14, 0, 393227, 8, 0, 393228, 11, 0, 393229, 4, 0, 458752, 3, 0, 458753, 3, 0, 458754, 3, 0, 458755, 5, 0, 458756, 29, 0, 458757, 30, 0, 458758, 31, 0, 458759, 5, 0, 458760, 6, 0, 458761, 10, 0, 458762, 14, 0, 458763, 9, 0, 458764, 12, 0, 458765, 6, 0, 524288, 3, 0, 524289, 3, 0, 524290, 4, 0, 524291, 33, 0, 524292, 29, 0, 524293, 30, 0, 524294, 31, 0, 524295, 9, 0, 524296, 10, 0, 524297, 11, 0, 524298, 14, 0, 524299, 5, 0, 524300, 4, 0, 524301, 7, 0, 589824, 3, 0, 589825, 3, 0, 589826, 3, 0, 589827, 0, 0, 589828, 29, 0, 589829, 30, 0, 589830, 31, 0, 589831, 15, 0, 589832, 16, 0, 589833, 16, 0, 589834, 19, 0, 589835, 17, 0, 589836, 17, 0, 589837, 18, 0, 655361, 3, 0, 655362, 6, 0, 655363, 2, 0, 655364, 32, 0, 655365, 33, 0, 655366, 34, 0, 655367, 15, 0, 655368, 17, 0, 655369, 17, 0, 655370, 19, 0, 655371, 17, 0, 655372, 17, 0, 655373, 18, 0, 720897, 3, 0, 720898, 2, 0, 720899, 6, 0, 720900, 3, 0, 720901, 10, 0, 720902, 10, 0, 720903, 9, 0, 720904, 10, 0, 720905, 9, 0, 720906, 21, 0, 720907, 5, 0, 720908, 10, 0, 720909, 9, 0, 786433, 3, 0, 786434, 3, 0, 786435, 3, 0, 786436, 6, 0, 786437, 9, 0, 786438, 6, 0, 786439, 7, 0, 786440, 8, 0, 786441, 7, 0, 786442, 5, 0, 786443, 8, 0, 786444, 7, 0, 786445, 5, 0 )
+
+[node name="YSort" type="YSort" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="House" parent="YSort" instance=ExtResource( 11 )]
+position = Vector2( 273.759, 224.281 )
+
+[node name="LevelSwitch" type="Area2D" parent="YSort" groups=[
+"level_switch",
+]]
+position = Vector2( 273.759, 209.73 )
+script = ExtResource( 2 )
+level_path = "res://scenes/levels/Level2.tscn"
+
+[node name="enter_point" type="Position2D" parent="YSort/LevelSwitch"]
+position = Vector2( 0, 24.8126 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/LevelSwitch"]
+shape = SubResource( 2 )
+
+[node name="LevelSwitch2" type="Area2D" parent="YSort" groups=[
+"level_switch",
+]]
+position = Vector2( 336.461, 368.47 )
+script = ExtResource( 2 )
+
+[node name="enter_point" type="Position2D" parent="YSort/LevelSwitch2"]
+position = Vector2( 0, -9.46664 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/LevelSwitch2"]
+position = Vector2( 0, 6.55145 )
+shape = SubResource( 3 )
+
+[node name="tree3" type="Sprite" parent="YSort"]
+position = Vector2( -245.122, -185.373 )
+texture = ExtResource( 10 )
+
+[node name="Enemy" parent="YSort" instance=ExtResource( 9 )]
+position = Vector2( 423.199, 256.56 )
+dash_base_len = 30.0
+
+[node name="Lightning" type="Light2D" parent="."]
+position = Vector2( 112, -440 )
+scale = Vector2( 19.327, 13.6432 )
+texture = ExtResource( 7 )
+energy = 0.0
+shadow_gradient_length = 38.0
+shadow_filter = 1
+shadow_filter_smooth = 16.1
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="Tween" type="Tween" parent="Lightning"]
+
+[node name="Timer" type="Timer" parent="Lightning"]
+wait_time = 5.0
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0.172549, 0.309804, 0.356863, 1 )
+
+[connection signal="timeout" from="Lightning/Timer" to="Lightning" method="_on_timeout"]

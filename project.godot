@@ -14,20 +14,92 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actor.gd"
 }, {
+"base": "Enemy",
+"class": "Bloomer",
+"language": "GDScript",
+"path": "res://scenes/objects/Bloomer/Bloomer.gd"
+}, {
 "base": "Camera2D",
 "class": "CameraFollow",
 "language": "GDScript",
 "path": "res://scenes/objects/CameraFollow.gd"
 }, {
 "base": "Actor",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://scenes/objects/Enemy.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Hitbox",
+"language": "GDScript",
+"path": "res://scenes/objects/Hitbox.gd"
+}, {
+"base": "Control",
+"class": "INGAME_UI",
+"language": "GDScript",
+"path": "res://scenes/ui/INGAME_UI.gd"
+}, {
+"base": "Node2D",
+"class": "Level",
+"language": "GDScript",
+"path": "res://scenes/levels/Level.gd"
+}, {
+"base": "Area2D",
+"class": "LevelSwitch",
+"language": "GDScript",
+"path": "res://scenes/objects/LevelSwitch/LevelSwitch.gd"
+}, {
+"base": "Control",
+"class": "Log",
+"language": "GDScript",
+"path": "res://scenes/objects/Log/Log.gd"
+}, {
+"base": "RigidBody2D",
+"class": "MassPoint",
+"language": "GDScript",
+"path": "res://scenes/objects/Exp_man/MassPoint.gd"
+}, {
+"base": "Actor",
 "class": "Player",
 "language": "GDScript",
-"path": "res://scenes/objects/Player.gd"
+"path": "res://scenes/objects/Player/Player.gd"
+}, {
+"base": "Node",
+"class": "PlayerData",
+"language": "GDScript",
+"path": "res://scenes/global/player_data.gd"
+}, {
+"base": "Enemy",
+"class": "Slime",
+"language": "GDScript",
+"path": "res://scenes/objects/Slime/Slime.gd"
+}, {
+"base": "Node",
+"class": "State",
+"language": "GDScript",
+"path": "res://scenes/global/State.gd"
+}, {
+"base": "Node",
+"class": "StateMachine",
+"language": "GDScript",
+"path": "res://scenes/global/StateMachine.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
+"Bloomer": "",
 "CameraFollow": "",
-"Player": ""
+"Enemy": "",
+"Hitbox": "",
+"INGAME_UI": "",
+"Level": "",
+"LevelSwitch": "",
+"Log": "",
+"MassPoint": "",
+"Player": "",
+"PlayerData": "",
+"Slime": "",
+"State": "",
+"StateMachine": ""
 }
 
 [application]
@@ -36,12 +108,45 @@ config/name="Amickz"
 run/main_scene="res://scenes/levels/main.tscn"
 config/icon="res://icon.png"
 
+[audio]
+
+default_bus_layout=""
+
+[autoload]
+
+Global="*res://scenes/global/Global.tscn"
+
 [display]
 
-window/size/test_width=1024
-window/size/test_height=600
+window/size/width=768
+window/size/height=450
+window/size/test_width=1536
+window/size/test_height=900
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
+
+[importer_defaults]
+
+texture={
+"compress/bptc_ldr": 0,
+"compress/hdr_mode": 0,
+"compress/lossy_quality": 0.7,
+"compress/mode": 0,
+"compress/normal_map": 0,
+"detect_3d": false,
+"flags/anisotropic": false,
+"flags/filter": false,
+"flags/mipmaps": false,
+"flags/repeat": 0,
+"flags/srgb": 2,
+"process/HDR_as_SRGB": false,
+"process/fix_alpha_border": true,
+"process/invert_color": false,
+"process/premult_alpha": false,
+"size_limit": 0,
+"stream": false,
+"svg/scale": 1.0
+}
 
 [input]
 
@@ -63,6 +168,21 @@ move_down={
 move_right={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
+ ]
+}
+roll={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
+ ]
+}
+attack={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":74,"unicode":0,"echo":false,"script":null)
+ ]
+}
+dash={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
  ]
 }
 
