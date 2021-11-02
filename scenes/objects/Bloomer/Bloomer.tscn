@@ -23,7 +23,7 @@ shader_param/a = Color( 0.137255, 0.137255, 0.137255, 1 )
 radius = 8.0
 height = 1.99999
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=4]
 resource_name = "hurt"
 length = 0.3
 tracks/0/type = "value"
