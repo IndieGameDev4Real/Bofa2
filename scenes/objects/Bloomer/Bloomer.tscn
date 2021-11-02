@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/objects/Bloomer/Bloomer.gd" type="Script" id=1]
 [ext_resource path="res://scenes/global/StateMachine.gd" type="Script" id=2]
@@ -9,6 +9,21 @@
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 8.0
 height = 1.99999
+
+[sub_resource type="Animation" id=4]
+resource_name = "hurt"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "shoot"
@@ -81,6 +96,7 @@ rotation = 1.57079
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/hurt = SubResource( 4 )
 anims/shoot = SubResource( 2 )
 
 [node name="ShootPosition" type="Position2D" parent="."]
@@ -118,6 +134,7 @@ script = ExtResource( 4 )
 one_shot = true
 
 [node name="DetectArea" type="Area2D" parent="."]
+visible = false
 __meta__ = {
 "_edit_group_": true,
 "_edit_lock_": true
@@ -130,6 +147,7 @@ shape = SubResource( 3 )
 script = ExtResource( 5 )
 
 [node name="Collision" type="CollisionPolygon2D" parent="Hitbox"]
+visible = false
 position = Vector2( 0, -3 )
 rotation = 1.57079
 polygon = PoolVector2Array( 4.99996, 7.00003, -4.00006, 8.99998, -29, 3.99982, -29, -2.00018, -1.99994, -9.00001, 6.00003, -4.99996 )

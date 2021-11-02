@@ -11,6 +11,7 @@ func knock(force: Vector2):
 
 func damage(amt: int):
 	hp -= amt;
+	anim.play("hurt")
 	if hp < 0:
 		death()
 	pass
