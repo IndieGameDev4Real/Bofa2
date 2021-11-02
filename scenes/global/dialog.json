@@ -14,8 +14,8 @@
 				{
 					"cond": {
 						"type": "switch",
-						"var": ["player_data", "hp"],
-					}
+						"var": ["player_data", "hp"]
+					},
 					"text": "Make yourself as home! Please, buy as much booze as you can!",
 					"next": 2
 				},
