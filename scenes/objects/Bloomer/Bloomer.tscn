@@ -1,0 +1,140 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scenes/objects/Bloomer/Bloomer.gd" type="Script" id=1]
+[ext_resource path="res://scenes/global/StateMachine.gd" type="Script" id=2]
+[ext_resource path="res://scenes/objects/Bloomer/IDLE.gd" type="Script" id=3]
+[ext_resource path="res://scenes/objects/Bloomer/SHOOT.gd" type="Script" id=4]
+[ext_resource path="res://scenes/objects/Hitbox.gd" type="Script" id=5]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 8.0
+height = 1.99999
+
+[sub_resource type="Animation" id=2]
+resource_name = "shoot"
+length = 0.65
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Head:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 4.28709, 11.3137 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Head:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4 ),
+"transitions": PoolRealArray( 3.03143, 1, 1.10957 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.3, 0.32, 0.34, 0.36, 0.38 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "fire"
+}, {
+"args": [  ],
+"method": "fire"
+}, {
+"args": [  ],
+"method": "fire"
+}, {
+"args": [  ],
+"method": "fire"
+}, {
+"args": [  ],
+"method": "fire"
+} ]
+}
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 126.004
+
+[node name="Bloomer" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 1 )
+hp = 10
+max_hp = 10
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -3 )
+rotation = 1.57079
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/shoot = SubResource( 2 )
+
+[node name="ShootPosition" type="Position2D" parent="."]
+position = Vector2( 0, -39 )
+
+[node name="Center" type="Position2D" parent="."]
+position = Vector2( 0, -16 )
+
+[node name="Stem" type="Polygon2D" parent="."]
+color = Color( 0, 0.160784, 0.0431373, 1 )
+polygon = PoolVector2Array( -1, -39, -7, -4, -5, 3, 0, 4, 5, 3, 6, -4 )
+
+[node name="Head" type="Polygon2D" parent="."]
+position = Vector2( -1, -39 )
+color = Color( 0.513726, 0, 0, 1 )
+offset = Vector2( 5, 18.5 )
+polygon = PoolVector2Array( -29, -24, -28, -19, -24, -15, -16, -13, -24, -8, -26, -3, -21, 1, -16, 0, -12, -2, -7, -8, -3, -11, -1, -6, 4, -1, 9, -1, 13, -2, 14, -3, 16, -7, 13, -12, 11, -14, 6, -17, 18, -18, 19, -20, 19, -25, 14, -29, 8, -29, 1, -26, -1, -24, -4, -29, -6, -31, -12, -38, -17, -38, -21, -35, -21, -31, -13, -26, -11, -20, -16, -20, -21, -27, -26, -27 )
+
+[node name="center thing" type="Polygon2D" parent="Head"]
+position = Vector2( -1, 1.5 )
+color = Color( 0, 0.501961, 0.513726, 1 )
+offset = Vector2( 42, 27 )
+polygon = PoolVector2Array( -44, -30, -47, -26, -46, -24, -40, -22, -37, -28, -39, -32 )
+
+[node name="SM" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="IDLE" type="Node" parent="SM"]
+script = ExtResource( 3 )
+
+[node name="SHOOT" type="Node" parent="SM"]
+script = ExtResource( 4 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="DetectArea" type="Area2D" parent="."]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
+shape = SubResource( 3 )
+
+[node name="Hitbox" type="KinematicBody2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="Collision" type="CollisionPolygon2D" parent="Hitbox"]
+position = Vector2( 0, -3 )
+rotation = 1.57079
+polygon = PoolVector2Array( 4.99996, 7.00003, -4.00006, 8.99998, -29, 3.99982, -29, -2.00018, -1.99994, -9.00001, 6.00003, -4.99996 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="SM/SHOOT" method="_on_AnimationPlayer_animation_finished"]
+[connection signal="timeout" from="Timer" to="SM/SHOOT" method="_on_Timer_timeout"]
+[connection signal="body_entered" from="DetectArea" to="SM/IDLE" method="_on_DetectArea_body_entered"]
+[connection signal="body_exited" from="DetectArea" to="SM/SHOOT" method="_on_DetectArea_body_exited"]

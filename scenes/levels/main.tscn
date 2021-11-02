@@ -15,4 +15,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Button2" type="Button" parent="HUD"]
+margin_left = 4.76221
+margin_top = 31.748
+margin_right = 121.762
+margin_bottom = 58.748
+text = "Level 2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="button_down" from="HUD/Button" to="." method="_on_Button_button_down"]
+[connection signal="button_down" from="HUD/Button2" to="." method="_on_Button2_button_down"]

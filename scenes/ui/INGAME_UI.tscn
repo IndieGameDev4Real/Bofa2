@@ -1,34 +1,199 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scenes/ui/INGAME_UI.gd" type="Script" id=1]
+[ext_resource path="res://assets/textures/btns.png" type="Texture" id=2]
+[ext_resource path="res://assets/fonts/ui_font.tres" type="DynamicFont" id=3]
 
 [sub_resource type="DynamicFontData" id=1]
 antialiased = false
-font_path = "res://assets/fonts/Teko/Teko-Regular.ttf"
+font_path = "res://assets/fonts/Teko/Teko-Light.ttf"
 
 [sub_resource type="DynamicFont" id=2]
-size = 32
+size = 17
 font_data = SubResource( 1 )
 
 [sub_resource type="Theme" id=3]
 default_font = SubResource( 2 )
 
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 0, 48, 48 )
+
+[sub_resource type="Shader" id=6]
+code = "shader_type canvas_item;
+
+uniform vec2 rand_seed;
+uniform float dith;
+uniform float sep;
+
+float rand(vec2 co){
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453) - 0.5;
+}
+
+
+void fragment() {
+	int state = 100000;
+	
+
+	
+	float a = 10.;
+	vec2 h;
+	h.x = UV.x/8. + 0.64;
+	h.y = 1.0;
+	
+	
+	vec2 q = vec2(ivec2(h*sep + rand(UV+vec2(TIME/2000000.,0.0))/dith ) )/(sep);
+	vec2 d = h - q; 
+	
+	
+	vec3 color_hsv = vec3(q.x, 1.0, q.y);
+//	color_hsv.x = q;
+
+	vec3 color_rgb;
+	{
+		vec3 c = color_hsv;
+		vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+		vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+		color_rgb=c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+	}
+	
+	COLOR.rgb = color_rgb;
+	
+	
+}"
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
+shader_param/rand_seed = null
+shader_param/dith = 1.0
+shader_param/sep = 19.2
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 112, 96, 32 )
+
+[sub_resource type="AtlasTexture" id=9]
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 144, 320, 80 )
+
 [node name="INGAME_UI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
 theme = SubResource( 3 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="pauseBtn" type="Button" parent="."]
-margin_right = 91.0
+[node name="Control" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="pauseBtn" type="TextureButton" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -48.0
+margin_right = 48.0
 focus_mode = 0
 enabled_focus_mode = 0
-text = "Pause"
+texture_normal = SubResource( 4 )
+texture_pressed = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HpBar" type="ColorRect" parent="."]
+material = SubResource( 7 )
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 80.0
+margin_top = -32.0
+margin_right = 132.0
+color = Color( 0.321569, 0, 0.764706, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HpContainer" type="TextureRect" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 48.0
+margin_top = -32.0
+texture = SubResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dialog" type="Control" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_default_cursor_shape = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Profile" type="TextureRect" parent="Dialog"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -312.0
+margin_top = -72.0
+margin_right = -248.0
+margin_bottom = -8.0
+texture = SubResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Frame" type="TextureRect" parent="Dialog"]
+margin_left = -320.0
+margin_top = -80.0
+texture = SubResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="RichTextLabel" parent="Dialog"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -233.0
+margin_top = -72.0
+margin_right = -12.0
+margin_bottom = -8.0
+custom_fonts/normal_font = ExtResource( 3 )
+text = "hello ther
+what is the up!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionContainer" type="HBoxContainer" parent="Dialog"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -236.0
+margin_top = -66.0
+margin_right = -15.0
+margin_bottom = -17.0
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [connection signal="pressed" from="pauseBtn" to="." method="_on_pauseBtn_pressed"]
+[connection signal="gui_input" from="Dialog" to="." method="_on_Dialog_gui_input"]

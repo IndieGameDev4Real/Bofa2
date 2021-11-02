@@ -33,7 +33,7 @@ func back():
 		_enter_state()
 
 func _enter_state():
-		
+	
 	if DEBUG and _log != null: _log.add_log([ "Entering state: ", state.name])
 	state.fsm = self
 	state.enter()

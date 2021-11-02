@@ -14,15 +14,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actor.gd"
 }, {
+"base": "Enemy",
+"class": "Bloomer",
+"language": "GDScript",
+"path": "res://scenes/objects/Bloomer/Bloomer.gd"
+}, {
 "base": "Camera2D",
 "class": "CameraFollow",
 "language": "GDScript",
 "path": "res://scenes/objects/CameraFollow.gd"
 }, {
-"base": "KinematicBody2D",
+"base": "Actor",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://scenes/objects/Enemy/Enemy.gd"
+"path": "res://scenes/objects/Enemy.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Hitbox",
+"language": "GDScript",
+"path": "res://scenes/objects/Hitbox.gd"
 }, {
 "base": "Control",
 "class": "INGAME_UI",
@@ -34,10 +44,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/levels/Level.gd"
 }, {
+"base": "Area2D",
+"class": "LevelSwitch",
+"language": "GDScript",
+"path": "res://scenes/objects/LevelSwitch/LevelSwitch.gd"
+}, {
 "base": "Control",
 "class": "Log",
 "language": "GDScript",
 "path": "res://scenes/objects/Log/Log.gd"
+}, {
+"base": "RigidBody2D",
+"class": "MassPoint",
+"language": "GDScript",
+"path": "res://scenes/objects/Exp_man/MassPoint.gd"
 }, {
 "base": "Actor",
 "class": "Player",
@@ -48,6 +68,11 @@ _global_script_classes=[ {
 "class": "PlayerData",
 "language": "GDScript",
 "path": "res://scenes/global/player_data.gd"
+}, {
+"base": "Enemy",
+"class": "Slime",
+"language": "GDScript",
+"path": "res://scenes/objects/Slime/Slime.gd"
 }, {
 "base": "Node",
 "class": "State",
@@ -61,13 +86,18 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Actor": "",
+"Bloomer": "",
 "CameraFollow": "",
 "Enemy": "",
+"Hitbox": "",
 "INGAME_UI": "",
 "Level": "",
+"LevelSwitch": "",
 "Log": "",
+"MassPoint": "",
 "Player": "",
 "PlayerData": "",
+"Slime": "",
 "State": "",
 "StateMachine": ""
 }
@@ -78,16 +108,20 @@ config/name="Amickz"
 run/main_scene="res://scenes/levels/main.tscn"
 config/icon="res://icon.png"
 
+[audio]
+
+default_bus_layout=""
+
 [autoload]
 
 Global="*res://scenes/global/Global.tscn"
 
 [display]
 
-window/size/width=512
-window/size/height=300
-window/size/test_width=1024
-window/size/test_height=600
+window/size/width=768
+window/size/height=450
+window/size/test_width=1536
+window/size/test_height=900
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
@@ -143,7 +177,7 @@ roll={
 }
 attack={
 "deadzone": 0.5,
-"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":74,"unicode":0,"echo":false,"script":null)
  ]
 }
 dash={

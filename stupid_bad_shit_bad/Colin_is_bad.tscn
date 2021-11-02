@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://stupid_bad_shit_bad/Colin_is_bad.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 21.0529, 14.6209 )
+
+[sub_resource type="PhysicsMaterial" id=2]
+bounce = 0.95
+
+[node name="Colin_is_bad" type="Node2D"]
+position = Vector2( -1, 8 )
+script = ExtResource( 1 )
+
+[node name="StaticBody" type="StaticBody2D" parent="."]
+position = Vector2( 394.228, 263.732 )
+scale = Vector2( 13.32, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody"]
+position = Vector2( -1.77232, 0.732224 )
+shape = SubResource( 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody"]
+position = Vector2( 0.227676, -0.267776 )
+color = Color( 0.478431, 0.101961, 0.101961, 1 )
+polygon = PoolVector2Array( -22.7723, -14.2678, -22.7723, 15.7322, 20, 16, 19.2277, -14.2678 )
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2( 390.228, 98.7322 )
+physics_material_override = SubResource( 2 )
+gravity_scale = 7.04
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2( -1.77232, 0.732224 )
+shape = SubResource( 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="RigidBody2D"]
+position = Vector2( 0.227676, -0.267776 )
+color = Color( 0.478431, 0.101961, 0.101961, 1 )
+polygon = PoolVector2Array( -22.7723, -14.2678, -22.7723, 15.7322, 20, 16, 19.2277, -14.2678 )
