@@ -195,5 +195,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="lazy_update_timer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
 [connection signal="pressed" from="pauseBtn" to="." method="_on_pauseBtn_pressed"]
 [connection signal="gui_input" from="Dialog" to="." method="_on_Dialog_gui_input"]
+[connection signal="timeout" from="lazy_update_timer" to="." method="lazy_update"]

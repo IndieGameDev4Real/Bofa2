@@ -1,0 +1,155 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "DialogConditionFrame": {
+            "properties": {
+                "cond": {
+                    "additionalItems": {
+                        "$ref": "#/definitions/DialogFrame"
+                    },
+                    "items": [
+                        {
+                            "anyOf": [
+                                {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/definitions/DialogDefaultFrame"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/Expression"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/definitions/DialogOptionFrame"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/Expression"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/definitions/DialogConditionFrame"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/Expression"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "DialogDefaultFrame": {
+            "properties": {
+                "next": {
+                    "type": "number"
+                },
+                "profile": {
+                    "type": [
+                        "string",
+                        "number"
+                    ]
+                },
+                "text": {
+                    "type": "string"
+                },
+                "vars": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "DialogFrame": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/DialogDefaultFrame"
+                },
+                {
+                    "$ref": "#/definitions/DialogOptionFrame"
+                },
+                {
+                    "$ref": "#/definitions/DialogConditionFrame"
+                }
+            ]
+        },
+        "DialogOptionFrame": {
+            "properties": {
+                "option": {
+                    "items": {
+                        "$ref": "#/definitions/DialogFrame"
+                    },
+                    "type": "array"
+                },
+                "profile": {
+                    "type": [
+                        "string",
+                        "number"
+                    ]
+                },
+                "text": {
+                    "type": "string"
+                },
+                "vars": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "Expression": {
+            "properties": {
+                "expr": {
+                    "enum": [
+                        "string"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Profiles": {
+            "additionalProperties": {
+                "type": "string"
+            },
+            "type": "object"
+        }
+    },
+    "properties": {
+        "dialog": {
+            "additionalProperties": {
+                "additionalProperties": {
+                    "properties": {
+                        "sequence": {
+                            "items": {
+                                "$ref": "#/definitions/DialogFrame"
+                            },
+                            "type": "array"
+                        }
+                    },
+                    "type": "object"
+                },
+                "type": "object"
+            },
+            "type": "object"
+        },
+        "profiles": {
+            "$ref": "#/definitions/Profiles"
+        }
+    },
+    "type": "object"
+}

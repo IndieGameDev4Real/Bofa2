@@ -17,6 +17,19 @@ var target: Node2D
 var exact_pos = self.position
 
 func _ready():
+	var limit_top = $top
+	var limit_bottom = $bottom
+	
+	var pos
+	if limit_top != null:
+		pos = position + limit_top.position
+		set_limit(MARGIN_LEFT, pos.x)
+		set_limit(MARGIN_TOP, pos.y)
+	if limit_bottom != null:
+		pos = position + limit_bottom.position
+		set_limit(MARGIN_RIGHT, pos.x)
+		set_limit(MARGIN_BOTTOM, pos.y)
+	
 	if target_path != null:
 		target = get_node(target_path)
 		if will_snap:

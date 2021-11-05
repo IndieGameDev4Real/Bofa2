@@ -4,7 +4,7 @@ extends Node2D
 
 
 onready var player_data : PlayerData = get_node("/root/Global/player_data")
-onready var camera : CameraFollow = $Camera
+onready var camera : Camera2D = $Camera
 onready var anims : AnimationPlayer = get_node("/root/Level_root/GlobalAnims")
 onready var start_points := get_tree().get_nodes_in_group("level_switch")
 var player_scene : PackedScene = preload("res://scenes/objects/Player/Player.tscn");
@@ -34,7 +34,8 @@ func _ready():
 	player.position = pos
 	player.connect("damaged", self, "_on_Player_damaged")
 	
-	camera.set_target(player)
+	if camera is CameraFollow:
+		camera.set_target(player)
 	pass
 	
 

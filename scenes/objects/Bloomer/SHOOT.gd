@@ -16,10 +16,13 @@ func _on_Timer_timeout():
 	pass # Replace with function body.
 
 
+
+func _on_AnimationPlayer_animation_changed(old_name, new_name):
+	_on_AnimationPlayer_animation_finished(old_name)
+
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "shoot":
 		owner.get_node("Timer").start()
-	pass # Replace with function body.
 
 
 func _on_DetectArea_body_exited(body):
@@ -34,3 +37,4 @@ func _on_DetectArea_body_exited(body):
 		yield(owner.anim, "animation_finished")
 		exit()
 	pass # Replace with function body.
+

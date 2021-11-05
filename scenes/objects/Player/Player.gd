@@ -11,7 +11,7 @@ onready var sm := $SM
 onready var sprite := $Sprite
 onready var sword := $Sword
 onready var anim := $AnimationPlayer
-onready var global = get_node("/root/Global/player_data")
+onready var player_data = get_node("/root/Global/player_data")
 
 export var ACCELERATION := 1200.0
 export var MAX_SPEED := 200.0
@@ -22,6 +22,7 @@ var facing := Vector2.DOWN
 var dir := Vector2.DOWN
 
 func _ready():
+	center = $Body/Center
 	velocity = Vector2.ZERO
 
 func walk(delta):
@@ -47,7 +48,7 @@ func dash_atk():
 
 func damage(dmg: int) -> void:
 	emit_signal("damaged", dmg)
-	global.data["hp"] = global.data["hp"] - dmg
+	player_data.hp = player_data.hp - dmg
 	
 
 func knock_back(force: Vector2) -> void:
@@ -69,6 +70,9 @@ func get_dir() -> Vector2:
 	return dir
 
 func try_set_anim(name):
+
+	var a = 2;
+
 	if sprite.animation != name:
 		sprite.animation = name;
 
@@ -78,6 +82,12 @@ func set_anim(dir: Vector2, still = false ):
 		try_set_anim("walking_down")
 	elif dir.angle() >= -0.01 - PI * 3/4 and dir.angle() <= -PI / 4:
 		try_set_anim("walking_up")
+	elif dir.angle() >= PI * 3/4 and dir.angle() >= -PI / 4:
+		try_set_anim("walking_side")
+		sprite.flip_h = true
+	elif dir.angle() <= - PI * 3/4 or dir.angle() <= PI / 4:
+		try_set_anim("walking_side")
+		sprite.flip_h = false
 	else:
 		try_set_anim("idle")
 

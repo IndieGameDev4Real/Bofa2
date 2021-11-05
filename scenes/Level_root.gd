@@ -35,6 +35,9 @@ func start_level(packed_level, door_id):
 	level = new_level
 
 
+func start_dialog( npc: String, name: String ):
+	UI.start_dialog( npc, name )
+
 func _on_INGAME_UI_paused():
 	if level != null:
 		level.toggle_pause()

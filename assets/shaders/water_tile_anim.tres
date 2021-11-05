@@ -1,0 +1,86 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+float s(float f) {
+	return sin(f * 3.14159265);
+}
+
+float rand(vec2 co){
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
+float layer(vec2 uv, float time, float scale, float ts, float yoff) {
+	vec2 suv = uv * scale + ((scale-1.0) * 1.0);
+	suv.y+=yoff;
+	float t = time * scale + scale * ts;
+	return s(
+		suv.y * (1./16.) 
+		+ 
+		0.5 * s(
+			suv.x * (1./16.)
+			+ 
+			t*0.2
+		) * 
+			(s(t*0.25)) * 0.5
+		+ 
+		(t/10.0)*0.2
+		) * 0.1;
+}
+
+void fragment() {
+	
+	vec2 uv = vec2(ivec2(UV/TEXTURE_PIXEL_SIZE))*TEXTURE_PIXEL_SIZE;
+	vec4 tex = texture(TEXTURE, UV);
+	
+	vec2 suv = uv/TEXTURE_PIXEL_SIZE;
+	
+	COLOR = tex;
+	
+	ivec4 itex = ivec4(tex * 255.0);
+	if (itex.rgb == ivec3(26, 95, 135)) {
+		float yoff = TIME * 10.0;
+		COLOR.b += layer(suv, TIME, 1.0, 1.0, 0.0)*0.25;
+		COLOR.b += layer(suv, TIME, 2.0, 0.782974621,yoff)*0.25;
+		COLOR.b += layer(suv, TIME, 6.0, 0.482974621,yoff*1.2)*0.15;
+		COLOR.b += layer(suv, TIME, 8.0, 0.682974621,yoff*-1.9)*0.15;
+		
+		
+		COLOR.b += layer(suv.yx, TIME, 1.0, 1.0, 0.0)*0.15;
+		COLOR.b += layer(suv.yx, TIME, 2.0, 0.782974621,yoff)*0.15;
+		
+		vec3 color_hsv;
+		{
+			vec4 c = COLOR;
+			vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+			vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+			vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+			float d = q.x - min(q.w, q.y);
+			float e = 1.0e-10;
+			color_hsv=vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+		}
+		vec2 h = color_hsv.xz;
+		float sep = 30.0;
+		float dith = 2000.0;
+		vec2 q = vec2(ivec2(h*sep + rand(UV)/dith ) )/(sep);
+		
+		color_hsv.xz = q;
+		vec3 color_rgb;
+		{
+			vec3 c = color_hsv;
+			vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+			vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+			color_rgb=c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+		}
+	
+		COLOR.rgb = color_rgb;
+	
+	}
+	
+	
+	
+}"
+
+[resource]
+shader = SubResource( 1 )
