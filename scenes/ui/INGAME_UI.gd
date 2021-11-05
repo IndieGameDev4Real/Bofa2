@@ -82,8 +82,9 @@ func set_dialog(i):
 		
 		if "text" in dialog:
 			$Dialog/Text.text = resolve_text( dialog )
-		
-		current_dialog_frame = dialog
+			current_dialog_frame = dialog
+		else:
+			set_dialog(dialog["next"])
 
 
 func set_dialog_option(option: Array):

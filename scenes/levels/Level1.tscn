@@ -232,9 +232,9 @@ shader_param/anim_speed_random = 0.0
 shader_param/anim_offset_random = 0.0
 shader_param/lifetime_randomness = 0.0
 shader_param/emission_box_extents = Vector3( 425, 0, 1 )
-shader_param/color_value = Color( 0, 0, 0, 1 )
-shader_param/trail_divisor = 4
-shader_param/gravity = Vector3( 0, -1e-06, 0 )
+shader_param/color_value = Color( 0, 0.0196078, 0.172549, 0.6 )
+shader_param/trail_divisor = 5
+shader_param/gravity = Vector3( 0, 10, 0 )
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 1 )

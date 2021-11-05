@@ -1,7 +1,6 @@
 {
 	"profiles": {
 		"GuzDefault": "res://assets/textures/Guz/GuzDefault.tres"
-
 	},
 	"dialog": {
 		"Guz": {
@@ -52,3 +51,7 @@
 		}
 	}
 }
+
+
+
+

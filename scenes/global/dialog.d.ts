@@ -25,7 +25,7 @@ type DialogFrame = (DialogDefaultFrame | DialogOptionFrame | DialogConditionFram
 interface DialogDefaultFrame {
     profile?: keyof Profiles,
     vars?: Array<string>,
-    text: string,
+    text?: string,
     next: number
 }
 
